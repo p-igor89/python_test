@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from selenium.webdriver.chrome.webdriver import WebDriver
 import unittest
+from group import Group
 
 def is_alert_present(wd):
     try:
@@ -19,7 +20,7 @@ class test(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, "secret", "admin")
         self.open_group_page(wd)
-        self.create_group(wd, "Example", "Address", "Notes")
+        self.create_group(wd, Group("Example", "Address", "Notes"))
         self.retorn_to_group_page(wd)
         self.logout(wd)
 
@@ -28,7 +29,7 @@ class test(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, "secret", "admin")
         self.open_group_page(wd)
-        self.create_group(wd, "", "", "")
+        self.create_group(wd, Group("", "", ""))
         self.retorn_to_group_page(wd)
         self.logout(wd)
 
@@ -38,18 +39,18 @@ class test(unittest.TestCase):
     def retorn_to_group_page(self, wd):
         wd.find_element_by_link_text("group page").click()
 
-    def create_group(self, wd, name, header, footer):
+    def create_group(self, wd, group):
         # Init group creation
         wd.find_element_by_name("new").click()
         # Fill group film
         wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys(name)
+        wd.find_element_by_name("group_name").send_keys(group.name)
         wd.find_element_by_name("group_header").click()
         wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys(header)
+        wd.find_element_by_name("group_header").send_keys(group.header)
         wd.find_element_by_name("group_footer").click()
         wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys(footer)
+        wd.find_element_by_name("group_footer").send_keys(group.footer)
         # Submit group creation
         wd.find_element_by_name("submit").click()
 
