@@ -17,3 +17,10 @@ class Application:
 
     def destroy(self):
         self.wd.quit()
+
+    def is_Valid(self):
+        try:
+            self.wd.current_url
+            return True
+        except:
+            return False
