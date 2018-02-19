@@ -8,3 +8,5 @@ def test_del_first_group(app):
     app.group.del_first_group()
     newGroup = app.group.get_Group_list()
     assert len(oldGroup) - 1 == len(newGroup)
+    oldGroup[0:1] = []
+    assert oldGroup == newGroup
