@@ -4,13 +4,19 @@ from model.group import Group
 
 def test_app_group(app):
     oldGroup = app.group.get_Group_list()
-    app.group.create(Group("Example", "Address", "Notes"))
+    group = Group("Example", "Address", "Notes")
+    app.group.create(group)
     newGroup = app.group.get_Group_list()
     assert len(oldGroup) + 1 == len(newGroup)
+    oldGroup.append(group)
+    assert sorted(oldGroup, key=Group.idOrMax) == sorted(newGroup, key=Group.idOrMax)
 
 
 def test_app_empty_group(app):
     oldGroup = app.group.get_Group_list()
-    app.group.create(Group("", "", ""))
+    group = Group("", "", "")
+    app.group.create(group)
     newGroup = app.group.get_Group_list()
     assert len(oldGroup) + 1 == len(newGroup)
+    oldGroup.append(group)
+    assert sorted(oldGroup, key=Group.idOrMax) == sorted(newGroup, key=Group.idOrMax)
