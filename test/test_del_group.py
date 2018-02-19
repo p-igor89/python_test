@@ -1,12 +1,14 @@
 from model.group import Group
+from random import randrange
 
 
-def test_del_first_group(app):
-    oldGroup = app.group.get_Group_list()
+def test_del_some_group(app):
     if app.group.count() == 0:
         app.group.create(Group(name='test'))
-    app.group.del_first_group()
+    oldGroup = app.group.get_Group_list()
+    index = randrange(len(oldGroup))
+    app.group.del_group_by_index(index)
     newGroup = app.group.get_Group_list()
     assert len(oldGroup) - 1 == len(newGroup)
-    oldGroup[0:1] = []
+    oldGroup[index:index+1] = []
     assert oldGroup == newGroup

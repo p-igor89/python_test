@@ -32,28 +32,37 @@ class GroupHelper:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
 
-    def del_first_group(self):
+    def del_group_by_index(self, index):
         wd = self.app.wd
         self.open_group_page()
-        self.select_first_group()
+        self.select_group_by_index(index)
         # Delete group
         wd.find_element_by_name("delete").click()
         # Submit group creation
         self.return_to_group_page()
         self.groupCache = None
 
-    def select_first_group(self):
+    def del_first_group(self):
+        self.del_group_by_index(0)
+
+    def select_group_by_index(self, index):
         wd = self.app.wd
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
+
+    def select_first_group(self):
+        self.select_group_by_index(0)
 
     def open_group_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("groups").click()
 
-    def modify_first_group(self, new_group_data):
+    def modify_first_group(self):
+         self.modify_group_by_index(0)
+
+    def modify_group_by_index(self, index, new_group_data):
         wd = self.app.wd
         self.open_group_page()
-        self.select_first_group()
+        self.select_group_by_index(index)
         # Edit group
         wd.find_element_by_name("edit").click()
         # Modify group
